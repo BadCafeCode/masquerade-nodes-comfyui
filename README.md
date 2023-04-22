@@ -1,5 +1,9 @@
 #### Warning
-To inpaint more than one image at a time, the following PR currently has to be manually applied to ComfyUI: https://github.com/comfyanonymous/ComfyUI/pull/553
+This is still a work in progress and the following extra warnings apply:
+
+1. To inpaint more than one image at a time, the following PR currently has to be manually applied to ComfyUI: https://github.com/comfyanonymous/ComfyUI/pull/553
+2. If cloning via git, you'll either need to use `--recurse-submodules` or run `git submodule update --init --recursive` after cloning.
+3. If downloading via zip, you'll also have to download [ClipSeg](https://github.com/timojl/clipseg) and unzip it within this folder (as 'clipseg').
 
 While I've tested everything locally and it seems to work, there may still be issues. If you encounter any issues, please create an issue on Github (or even better, a pull request).
 
