@@ -1,3 +1,8 @@
+#### Warning
+To inpaint more than one image at a time, the following PR currently has to be manually applied to ComfyUI: https://github.com/comfyanonymous/ComfyUI/pull/553
+
+While I've tested everything locally and it seems to work, there may still be issues. If you encounter any issues, please create an issue on Github (or even better, a pull request).
+
 # Masquerade Nodes
 
 This is a node pack for ComfyUI, primarily dealing with masks. Some example workflows this pack enables are:
@@ -14,8 +19,6 @@ This is a node pack for ComfyUI, primarily dealing with masks. Some example work
 ![FilterImagesExample](https://user-images.githubusercontent.com/3157454/233810992-849858e5-64d4-46d4-9d7f-afa20dde622f.png)
 
 The lynchpin of these workflows is the [Mask by Text](#mask-by-text) node. This node makes use of ClipSeg to dynamically create masks from images via text prompts.
-
-All nodes in this pack have been tested with batch sizes greater than one. If you encounter any batch-related issues (or any other issues), please create an issue (or even better, a pull request) on Github.
 
 # Node Descriptions
 
