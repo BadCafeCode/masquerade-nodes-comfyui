@@ -7,11 +7,30 @@ from torchvision import transforms
 from torchvision.ops import masks_to_boxes
 import torchvision.transforms.functional as TF
 import torch.nn.functional as torchfn
-from .clipseg.models.clipseg import CLIPDensePredT
+import subprocess
+import sys
 
 DELIMITER = '|'
 cached_clipseg_model = None
 VERY_BIG_SIZE = 1024 * 1024
+
+package_list = None
+def update_package_list():
+    import sys
+    import subprocess
+
+    global package_list
+    package_list = [r.decode().split('==')[0] for r in subprocess.check_output([sys.executable, '-m', 'pip', 'freeze']).split()]
+
+def ensure_package(package_name, import_path):
+    global package_list
+    if package_list == None:
+        update_package_list()
+
+    if package_name not in package_list:
+        print("(First Run) Installing missing package %s" % package_name)
+        subprocess.check_call([sys.executable, '-m', 'pip', '-q', 'install', import_path])
+        update_package_list()
 
 def tensor2mask(t: torch.Tensor) -> torch.Tensor:
     size = t.size()
@@ -112,6 +131,7 @@ class ClipSegNode:
     CATEGORY = "Masquerade Nodes"
 
     def get_mask(self, image, prompt, negative_prompt, precision, normalize):
+
         model = self.load_model()
         image = tensor2rgb(image)
         B, H, W, _ = image.shape
@@ -158,6 +178,8 @@ class ClipSegNode:
     def load_model(self):
         global cached_clipseg_model
         if cached_clipseg_model == None:
+            ensure_package("clipseg", "clipseg@git+https://github.com/timojl/clipseg.git@bbc86cfbb7e6a47fb6dae47ba01d3e1c2d6158b0")
+            from clipseg.clipseg import CLIPDensePredT
             model = CLIPDensePredT(version='ViT-B/16', reduce_dim=64, complex_trans_conv=True)
             model.eval()
 
