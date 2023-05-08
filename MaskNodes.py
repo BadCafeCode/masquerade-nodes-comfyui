@@ -806,9 +806,22 @@ class PasteByMask:
         # Scale the mask to be a matching size if it isn't
         B, H, W, C = image_base.shape
         MB = mask.shape[0]
-        if mask_mapping_optional is None and MB < B:
-            assert(B % MB == 0)
-            mask = mask.repeat(B // MB, 1, 1)
+        PB = image_to_paste.shape[0]
+        if mask_mapping_optional is None:
+            print(B, MB, PB)
+            if B < PB:
+                assert(PB % B == 0)
+                image_base = image_base.repeat(PB // B, 1, 1, 1)
+            B, H, W, C = image_base.shape
+            if MB < B:
+                assert(B % MB == 0)
+                mask = mask.repeat(B // MB, 1, 1)
+            elif B < MB:
+                assert(MB % B == 0)
+                image_base = image_base.repeat(MB // B, 1, 1, 1)
+            if PB < B:
+                assert(B % PB == 0)
+                image_to_paste = image_to_paste.repeat(B // PB, 1, 1, 1)
         mask = torch.nn.functional.interpolate(mask.unsqueeze(1), size=(H, W), mode='nearest')[:,0,:,:]
         MB, MH, MW = mask.shape
 
@@ -1016,6 +1029,45 @@ class PruneByMask:
         mean = torch.mean(torch.mean(mask,dim=2),dim=1)
         return (image[mean >= 0.5],)
 
+class MakeImageBatch:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image1": ("IMAGE",),
+            },
+            "optional": {
+                "image2": ("IMAGE",),
+                "image3": ("IMAGE",),
+                "image4": ("IMAGE",),
+                "image5": ("IMAGE",),
+                "image6": ("IMAGE",),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "append"
+
+    CATEGORY = "Masquerade Nodes"
+
+    def append(self, image1, image2 = None, image3 = None, image4 = None, image5 = None, image6 = None):
+        result = image1
+        if image2 is not None:
+            result = torch.cat((result, image2), 0)
+        if image3 is not None:
+            result = torch.cat((result, image3), 0)
+        if image4 is not None:
+            result = torch.cat((result, image4), 0)
+        if image5 is not None:
+            result = torch.cat((result, image5), 0)
+        if image6 is not None:
+            result = torch.cat((result, image6), 0)
+        return (result,)
+
+
 NODE_CLASS_MAPPINGS = {
     "Mask By Text": ClipSegNode,
     "Mask Morphology": MaskMorphologyNode,
@@ -1034,4 +1086,5 @@ NODE_CLASS_MAPPINGS = {
     "Prune By Mask": PruneByMask,
     "Separate Mask Components": SeparateMaskComponents,
     "Create Rect Mask": CreateRectMask,
+    "Make Image Batch": MakeImageBatch,
 }
