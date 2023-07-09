@@ -1,4 +1,3 @@
-from PIL import Image, ImageFilter, ImageOps
 import os
 import torch
 import numpy as np
@@ -22,8 +21,10 @@ def update_package_list():
     global package_list
     package_list = [r.decode().split('==')[0] for r in subprocess.check_output([sys.executable, '-m', 'pip', 'freeze']).split()]
 
-def ensure_package(package_name, import_path):
+def ensure_package(package_name, import_path=None):
     global package_list
+    if import_path == None:
+        import_path = package_name
     if package_list == None:
         update_package_list()
 
@@ -311,7 +312,7 @@ class UnaryMaskOp:
         return {
             "required": {
                 "image": ("IMAGE",),
-                "op": (["invert", "average", "round", "clamp"],),
+                "op": (["invert", "average", "round", "clamp", "abs"],),
             },
         }
 
@@ -331,6 +332,40 @@ class UnaryMaskOp:
             return (torch.round(image),)
         elif op == "clamp":
             return (torch.min(torch.max(image, torch.tensor(0.)), torch.tensor(1.)),)
+        elif op == "abs":
+            return (torch.abs(image),)
+
+class UnaryImageOp:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "op": (["invert", "average", "round", "clamp", "abs"],),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "op_image"
+
+    CATEGORY = "Masquerade Nodes"
+
+    def op_image(self, image, op):
+        image = tensor2rgb(image)
+        if op == "invert":
+            return (1. - image,)
+        elif op == "average":
+            mean = torch.mean(torch.mean(image,dim=2),dim=1)
+            return (mean.unsqueeze(1).unsqueeze(2).repeat(1, image.shape[1], image.shape[2], 1),)
+        elif op == "round":
+            return (torch.round(image),)
+        elif op == "clamp":
+            return (torch.min(torch.max(image, torch.tensor(0.)), torch.tensor(1.)),)
+        elif op == "abs":
+            return (torch.abs(image),)
 
 
 class BlurNode:
@@ -463,6 +498,7 @@ class MixColorByMask:
     CATEGORY = "Masquerade Nodes"
 
     def mix(self, image, r, g, b, mask):
+        r, g, b = r / 255., g / 255., b / 255.
         image_size = image.size()
         image2 = torch.tensor([r, g, b]).to(device=image.device).unsqueeze(0).unsqueeze(0).unsqueeze(0).repeat(image_size[0], image_size[1], image_size[2], 1)
         image, image2 = tensors2common(image, image2)
@@ -808,7 +844,6 @@ class PasteByMask:
         MB = mask.shape[0]
         PB = image_to_paste.shape[0]
         if mask_mapping_optional is None:
-            print(B, MB, PB)
             if B < PB:
                 assert(PB % B == 0)
                 image_base = image_base.repeat(PB // B, 1, 1, 1)
@@ -1067,12 +1102,179 @@ class MakeImageBatch:
             result = torch.cat((result, image6), 0)
         return (result,)
 
+class CreateQRCodeNode:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "text": ("STRING", {"multiline": True}),
+                "size": ("INT", {"default": 512, "min": 64, "max": 4096, "step": 64}),
+                "qr_version": ("INT", {"default": 1, "min": 1, "max": 40, "step": 1}),
+                "error_correction": (["L", "M", "Q", "H"], {"default": "H"}),
+                "box_size": ("INT", {"default": 10, "min": 1, "max": 100, "step": 1}),
+                "border": ("INT", {"default": 4, "min": 0, "max": 100, "step": 1}),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "create_qr_code"
+
+    CATEGORY = "Masquerade Nodes"
+
+    def create_qr_code(self, text, size, qr_version, error_correction, box_size, border):
+        ensure_package("qrcode")
+        import qrcode
+        if error_correction =="L":
+            error_level = qrcode.constants.ERROR_CORRECT_L
+        elif error_correction =="M":
+            error_level = qrcode.constants.ERROR_CORRECT_M
+        elif error_correction =="Q":
+            error_level = qrcode.constants.ERROR_CORRECT_Q
+        else:
+            error_level = qrcode.constants.ERROR_CORRECT_H
+
+        qr = qrcode.QRCode(
+                version=qr_version,
+                error_correction=error_level,
+                box_size=box_size,
+                border=border)
+        qr.add_data(text)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
+        img = img.resize((size,size))
+        # Convert img (a PIL Image) into a torch tensor
+        tensor = torch.from_numpy(np.array(img))
+        return (tensor2rgb(tensor.unsqueeze(0)),)
+
+def rgb2hsv(rgb):
+    # rgb is a tensor in the form [B, H, W, C]
+    r = rgb[...,0]
+    g = rgb[...,1]
+    b = rgb[...,2]
+
+    hsv = torch.zeros_like(rgb)
+    hsv_h = hsv[...,0]
+    hsv_s = hsv[...,1]
+    hsv_v = hsv[...,2]
+
+    # Value
+    hsv_v[:], max_idx = torch.max(rgb, dim=3)
+
+    chroma = hsv_v - torch.min(rgb, dim=3).values
+
+    # Hue
+    sixth = 1.0 / 6.0
+    hsv_h[max_idx == 0] = (sixth * ((g - b) / chroma % 6))[max_idx == 0]
+    hsv_h[max_idx == 1] = (sixth * ((b - r) / chroma + 2))[max_idx == 1]
+    hsv_h[max_idx == 2] = (sixth * ((r - g) / chroma + 4))[max_idx == 2]
+    hsv_h[chroma == 0] = 0
+
+    # Saturation
+    hsv_s[chroma != 0] = chroma[chroma != 0] / hsv_v[chroma != 0]
+
+    return hsv
+
+def hsv2rgb(hsv):
+    # hsv is a tensor in the form [B, H, W, C] where C is (h,s,v)
+    h = hsv[...,0]
+    h = h % 1.0
+    s = hsv[...,1]
+    v = hsv[...,2]
+
+    rgb = torch.zeros_like(hsv)
+
+    chroma = v * s
+    hp = (h * 6.0).type(torch.uint8)
+    x = chroma * (1 - torch.abs((h * 6.0) % 2 - 1))
+
+    zeros = torch.zeros_like(x)
+    rgb[hp == 0] = torch.stack([chroma, x, zeros], dim=3)[hp == 0]
+    rgb[hp == 1] = torch.stack([x, chroma, zeros], dim=3)[hp == 1]
+    rgb[hp == 2] = torch.stack([zeros, chroma, x], dim=3)[hp == 2]
+    rgb[hp == 3] = torch.stack([zeros, x, chroma], dim=3)[hp == 3]
+    rgb[hp == 4] = torch.stack([x, zeros, chroma], dim=3)[hp == 4]
+    rgb[hp == 5] = torch.stack([chroma, zeros, x], dim=3)[hp == 5]
+
+    rgb += (v - chroma).unsqueeze(3).repeat(1,1,1,3)
+    return rgb
+
+def hsv2hsl(hsv):
+    hsl = torch.zeros_like(hsv)
+    h = hsv[...,0]
+    s = hsv[...,1]
+    v = hsv[...,2]
+
+    hsl[...,0] = h
+    hsl[...,2] = v * (1. - s / 2.)
+    l = hsl[...,2]
+    defined = (l != 0) & (l != 1)
+    hsl[...,1][defined] = ((v - l) / torch.min(l, 1. - l))[defined]
+    return hsl
+
+def hsl2hsv(hsl):
+    hsv = torch.zeros_like(hsl)
+    h = hsl[...,0]
+    s = hsl[...,1]
+    l = hsl[...,2]
+
+    hsv[...,0] = h
+    hsv[...,2] = l + s * torch.min(l, 1. - l)
+    v = hsv[...,2]
+    defined = (v != 0)
+    hsv[...,1][defined] = (2. * (1. - l / v))[defined]
+    return hsv
+
+class ConvertColorSpace:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "in_space": (["RGB", "HSV", "HSL"],),
+                "out_space": (["RGB", "HSV", "HSL"],),
+                "image": ("IMAGE",),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "convert_color_space"
+
+    CATEGORY = "Masquerade Nodes"
+
+    def convert_color_space(self, in_space, out_space, image):
+        if in_space == out_space:
+            return (image,)
+
+        image = tensor2rgb(image)
+
+        if in_space == "HSV":
+            hsv = image
+        if in_space == "RGB":
+            hsv = rgb2hsv(image)
+        elif in_space == "HSL":
+            hsv = hsl2hsv(image)
+
+        # We are now in RGB or HSV
+        if out_space == "HSV":
+            return (hsv,)
+        elif out_space == "RGB":
+            return (hsv2rgb(hsv),)
+        else:
+            assert out_space == "HSL"
+            return (hsv2hsl(hsv),)
+
 
 NODE_CLASS_MAPPINGS = {
     "Mask By Text": ClipSegNode,
     "Mask Morphology": MaskMorphologyNode,
     "Combine Masks": MaskCombineOp,
     "Unary Mask Op": UnaryMaskOp,
+    "Unary Image Op": UnaryImageOp,
     "Blur": BlurNode,
     "Image To Mask": ImageToMask,
     "Mix Images By Mask": MixByMask,
@@ -1087,4 +1289,6 @@ NODE_CLASS_MAPPINGS = {
     "Separate Mask Components": SeparateMaskComponents,
     "Create Rect Mask": CreateRectMask,
     "Make Image Batch": MakeImageBatch,
+    "Create QR Code": CreateQRCodeNode,
+    "Convert Color Space": ConvertColorSpace,
 }

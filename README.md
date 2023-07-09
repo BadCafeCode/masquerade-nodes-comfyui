@@ -80,12 +80,27 @@ The lynchpin of these workflows is the [Mask by Text](#mask-by-text) node. This 
 	* `average` - Sets the value of all pixels in the mask to be equal to the value of the average pixel.
 	* `round` - Rounds all pixels to the nearest integer (generally 0 or 1).
 	* `clamp` - Clamps all values between 0 and 1.
+	* `abs` - Takes the absolute value of all pixels.
  
 #### Outputs
 1. The resultant mask.
 
 #### Tips
 * Average is deceptively useful. For example, you can use two Mask to Text nodes with different concepts (like 'New York' and 'Chicago') and average the raw ClipSeg result to see which city the image is more likely to depict.
+
+## Unary Image Op
+This node is the same as Unary Mask Op, but will operate across all channels of an image individually. This can be particularly useful after converting to HSV colorspace.
+#### Inputs
+* `image` - The image to operate on.
+* `op` - The operation to perform.
+	* `invert` - Inverts all channels of the image.
+	* `average` - Sets the value of all pixels in the image to be equal to the value of the average pixel in that channel.
+	* `round` - Rounds all pixels to the nearest integer (generally 0 or 1).
+	* `clamp` - Clamps all values between 0 and 1.
+	* `abs` - Takes the absolute value of all pixels.
+ 
+#### Outputs
+1. The resultant image.
 
 ## Blur
 #### Inputs
@@ -258,3 +273,18 @@ The lynchpin of these workflows is the [Mask by Text](#mask-by-text) node. This 
 * `image_width` - The width of the overall image to use. Will only be used if `copy_image_size` is empty.
 * `image_height` - The height of the overall image to use. Will only be used if `copy_image_size` is empty.
 * `copy_image_size` - If specified, the mask will have the same size as the given image.
+
+## Create QR Code
+#### Inputs
+* `text` - The content to embed in the QR Code
+* `size` - The size of the QR Code (across height and width) in pixels.
+* `qr_version` - The version of QR Code to use. Higher versions can encode more data, but are larger.
+* `error_correction` - The level of error correction to use.
+* `box_size` - The size of each box in the QR Code in pixels.
+* `border` - The size of the border around the QR Code in pixels.
+
+## Convert Color Space
+#### Inputs
+* `image` - The image to convert.
+* `in_space` - The color space of the input image -- valid values are `RGB`, `HSV`, and `HSL`.
+* `out_space` - The color space of the output image -- valid values are `RGB`, `HSV`, and `HSL`.
