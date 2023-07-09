@@ -1268,6 +1268,27 @@ class ConvertColorSpace:
             assert out_space == "HSL"
             return (hsv2hsl(hsv),)
 
+class MaqueradeIncrementerNode:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "seed": ("INT", {"default": 0, "min": -1, "max": 0xffffffffffffffff, "step": 1}),
+                "max_value": ("INT", {"default": 1, "min": 1, "max": 0xffffffffffffffff, "step": 1}),
+            }
+        }
+
+    RETURN_TYPES = ("INT",)
+    FUNCTION = "increment"
+
+    CATEGORY = "Masquerade Nodes"
+
+    def increment(self, seed, max_value):
+        return (seed % max_value,)
+
 
 NODE_CLASS_MAPPINGS = {
     "Mask By Text": ClipSegNode,
@@ -1291,4 +1312,28 @@ NODE_CLASS_MAPPINGS = {
     "Make Image Batch": MakeImageBatch,
     "Create QR Code": CreateQRCodeNode,
     "Convert Color Space": ConvertColorSpace,
+    "MasqueradeIncrementer": MaqueradeIncrementerNode,
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "Mask By Text": "Mask By Text",
+    "Mask Morphology": "Mask Morphology",
+    "Combine Masks": "Combine Masks",
+    "Unary Mask Op": "Unary Mask Op",
+    "Unary Image Op": "Unary Image Op",
+    "Blur": "Blur",
+    "Image To Mask": "Image To Mask",
+    "Mix Images By Mask": "Mix Images By Mask",
+    "Mix Color By Mask": "Mix Color By Mask",
+    "Mask To Region": "Mask To Region",
+    "Cut By Mask": "Cut By Mask",
+    "Paste By Mask": "Paste By Mask",
+    "Get Image Size": "Get Image Size",
+    "Change Channel Count": "Change Channel Count",
+    "Constant Mask": "Constant Mask",
+    "Prune By Mask": "Prune By Mask",
+    "Separate Mask Components": "Separate Mask Components",
+    "Create Rect Mask": "Create Rect Mask",
+    "Make Image Batch": "Make Image Batch",
+    "Create QR Code": "Create QR Code",
+    "Convert Color Space": "Convert Color Space",
+    "MasqueradeIncrementer": "Incrementer",
 }

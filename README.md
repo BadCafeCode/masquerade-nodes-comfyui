@@ -288,3 +288,9 @@ This node is the same as Unary Mask Op, but will operate across all channels of 
 * `image` - The image to convert.
 * `in_space` - The color space of the input image -- valid values are `RGB`, `HSV`, and `HSL`.
 * `out_space` - The color space of the output image -- valid values are `RGB`, `HSV`, and `HSL`.
+
+## Incrementer
+#### Inputs
+* `seed` - The current value.
+* `control_after_generate` - Set to "Increment" to actually increment.
+* `max_value` - The value to perform modulo against
