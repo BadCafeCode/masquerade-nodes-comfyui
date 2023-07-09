@@ -1313,6 +1313,8 @@ NODE_CLASS_MAPPINGS = {
     "Create QR Code": CreateQRCodeNode,
     "Convert Color Space": ConvertColorSpace,
     "MasqueradeIncrementer": MaqueradeIncrementerNode,
+}
+
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Mask By Text": "Mask By Text",
     "Mask Morphology": "Mask Morphology",
