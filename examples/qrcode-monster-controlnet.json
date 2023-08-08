@@ -1,6 +1,6 @@
 {
-  "last_node_id": 49,
-  "last_link_id": 113,
+  "last_node_id": 50,
+  "last_link_id": 120,
   "nodes": [
     {
       "id": 6,
@@ -14,7 +14,7 @@
         26
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -50,7 +50,7 @@
         26
       ],
       "flags": {},
-      "order": 12,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -86,7 +86,7 @@
         26
       ],
       "flags": {},
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -123,7 +123,7 @@
         "1": 123.48873138427734
       },
       "flags": {},
-      "order": 13,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -197,7 +197,7 @@
         26
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -233,7 +233,7 @@
         26
       ],
       "flags": {},
-      "order": 11,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -258,42 +258,6 @@
       }
     },
     {
-      "id": 20,
-      "type": "Reroute",
-      "pos": [
-        961,
-        531
-      ],
-      "size": [
-        75,
-        26
-      ],
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "",
-          "type": "*",
-          "link": 28
-        }
-      ],
-      "outputs": [
-        {
-          "name": "",
-          "type": "IMAGE",
-          "links": [
-            29
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "showOutputText": false,
-        "horizontal": false
-      }
-    },
-    {
       "id": 22,
       "type": "Reroute",
       "pos": [
@@ -305,7 +269,7 @@
         26
       ],
       "flags": {},
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -341,7 +305,7 @@
         26
       ],
       "flags": {},
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -409,7 +373,7 @@
         "1": 189.6284942626953
       },
       "flags": {},
-      "order": 14,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -440,67 +404,6 @@
       "bgcolor": "#533"
     },
     {
-      "id": 19,
-      "type": "Reroute",
-      "pos": [
-        560,
-        523
-      ],
-      "size": [
-        75,
-        26
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "",
-          "type": "*",
-          "link": 105
-        }
-      ],
-      "outputs": [
-        {
-          "name": "",
-          "type": "IMAGE",
-          "links": [
-            28
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "showOutputText": false,
-        "horizontal": false
-      }
-    },
-    {
-      "id": 35,
-      "type": "PreviewImage",
-      "pos": [
-        1570,
-        720
-      ],
-      "size": {
-        "0": 210,
-        "1": 246
-      },
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 104
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "PreviewImage"
-      }
-    },
-    {
       "id": 5,
       "type": "KSampler",
       "pos": [
@@ -512,7 +415,7 @@
         "1": 262
       },
       "flags": {},
-      "order": 23,
+      "order": 19,
       "mode": 0,
       "inputs": [
         {
@@ -551,82 +454,12 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        723107318612049,
+        86279305602227,
         "randomize",
         50,
         4,
         "dpmpp_2m_sde",
         "normal",
-        1
-      ]
-    },
-    {
-      "id": 8,
-      "type": "EmptyLatentImage",
-      "pos": [
-        1155,
-        528
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "link": 107,
-          "widget": {
-            "name": "width",
-            "config": [
-              "INT",
-              {
-                "default": 512,
-                "min": 64,
-                "max": 8192,
-                "step": 8
-              }
-            ]
-          }
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "link": 108,
-          "widget": {
-            "name": "height",
-            "config": [
-              "INT",
-              {
-                "default": 512,
-                "min": 64,
-                "max": 8192,
-                "step": 8
-              }
-            ]
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "links": [
-            36
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "EmptyLatentImage"
-      },
-      "widgets_values": [
-        768,
-        768,
         1
       ]
     },
@@ -681,18 +514,319 @@
       ]
     },
     {
+      "id": 24,
+      "type": "ImageUpscaleWithModel",
+      "pos": [
+        2289,
+        429
+      ],
+      "size": {
+        "0": 241.79998779296875,
+        "1": 46
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 38
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 111
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            112
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageUpscaleWithModel"
+      }
+    },
+    {
+      "id": 13,
+      "type": "VAEDecode",
+      "pos": [
+        2089.375393449767,
+        88.39890276696067
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 20
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            111,
+            113
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 48,
+      "type": "SaveImage",
+      "pos": [
+        2024,
+        709
+      ],
+      "size": {
+        "0": 594.291259765625,
+        "1": 605.5518798828125
+      },
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 112
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "qrcode_%date:MM_dd_yyyy%/qr_hires_"
+      ]
+    },
+    {
+      "id": 49,
+      "type": "SaveImage",
+      "pos": [
+        2453.0990710449205,
+        58.733161468505756
+      ],
+      "size": {
+        "0": 342.85223388671875,
+        "1": 310.2010803222656
+      },
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 113
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "qrcode_%date:MM_dd_yyyy%/qr_lores_"
+      ]
+    },
+    {
+      "id": 35,
+      "type": "PreviewImage",
+      "pos": [
+        960,
+        774
+      ],
+      "size": {
+        "0": 210,
+        "1": 246
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 115
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 8,
+      "type": "EmptyLatentImage",
+      "pos": [
+        1155,
+        528
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 117,
+          "widget": {
+            "name": "width",
+            "config": [
+              "INT",
+              {
+                "default": 512,
+                "min": 64,
+                "max": 8192,
+                "step": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 116,
+          "widget": {
+            "name": "height",
+            "config": [
+              "INT",
+              {
+                "default": 512,
+                "min": 64,
+                "max": 8192,
+                "step": 8
+              }
+            ]
+          },
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            36
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        768,
+        768,
+        1
+      ]
+    },
+    {
+      "id": 50,
+      "type": "Reroute",
+      "pos": [
+        934.6552751580807,
+        571.8623879092405
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 118
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "INT",
+          "links": [
+            116,
+            117
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 47,
+      "type": "SeargeIntegerConstant",
+      "pos": [
+        25,
+        585
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "value",
+          "type": "INT",
+          "links": [
+            114,
+            118
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SeargeIntegerConstant"
+      },
+      "widgets_values": [
+        768
+      ]
+    },
+    {
       "id": 10,
       "type": "ControlNetApplyAdvanced",
       "pos": [
-        1142,
-        282
+        1219,
+        281
       ],
       "size": {
         "0": 315,
         "1": 166
       },
       "flags": {},
-      "order": 22,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
@@ -749,310 +883,81 @@
       ]
     },
     {
-      "id": 24,
-      "type": "ImageUpscaleWithModel",
+      "id": 20,
+      "type": "Reroute",
       "pos": [
-        2289,
-        429
+        963,
+        517
       ],
-      "size": {
-        "0": 241.79998779296875,
-        "1": 46
-      },
-      "flags": {},
-      "order": 25,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "upscale_model",
-          "type": "UPSCALE_MODEL",
-          "link": 38
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 111
-        }
+      "size": [
+        75,
+        26
       ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            112
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImageUpscaleWithModel"
-      }
-    },
-    {
-      "id": 13,
-      "type": "VAEDecode",
-      "pos": [
-        2089.375393449767,
-        88.39890276696067
-      ],
-      "size": {
-        "0": 210,
-        "1": 46
-      },
-      "flags": {},
-      "order": 24,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 20
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 34
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            111,
-            113
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VAEDecode"
-      }
-    },
-    {
-      "id": 47,
-      "type": "SeargeIntegerConstant",
-      "pos": [
-        610,
-        710
-      ],
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "outputs": [
-        {
-          "name": "value",
-          "type": "INT",
-          "links": [
-            107,
-            108,
-            109
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SeargeIntegerConstant"
-      },
-      "widgets_values": [
-        768
-      ]
-    },
-    {
-      "id": 42,
-      "type": "Get Image Size",
-      "pos": [
-        460,
-        810
-      ],
-      "size": {
-        "0": 210,
-        "1": 46
-      },
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 90
-        }
-      ],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            92
-          ],
-          "shape": 3,
-          "slot_index": 0
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Get Image Size"
-      }
-    },
-    {
-      "id": 44,
-      "type": "SeargeIntegerMath",
-      "pos": [
-        500,
-        920
-      ],
-      "size": {
-        "0": 315,
-        "1": 130
-      },
       "flags": {},
       "order": 16,
       "mode": 0,
       "inputs": [
         {
-          "name": "c",
-          "type": "INT",
-          "link": 92,
-          "widget": {
-            "name": "c",
-            "config": [
-              "INT",
-              {
-                "default": 0,
-                "min": 0,
-                "max": 18446744073709552000
-              }
-            ]
-          }
-        },
-        {
-          "name": "a",
-          "type": "INT",
-          "link": 109,
-          "widget": {
-            "name": "a",
-            "config": [
-              "INT",
-              {
-                "default": 0,
-                "min": 0,
-                "max": 18446744073709552000
-              }
-            ]
-          }
+          "name": "",
+          "type": "*",
+          "link": 120
         }
       ],
       "outputs": [
         {
-          "name": "result",
-          "type": "INT",
+          "name": "",
+          "type": "IMAGE",
           "links": [
-            93
+            29
           ],
-          "shape": 3,
           "slot_index": 0
         }
       ],
       "properties": {
-        "Node name for S&R": "SeargeIntegerMath"
-      },
-      "widgets_values": [
-        "a - c",
-        768,
-        1,
-        0
-      ]
-    },
-    {
-      "id": 45,
-      "type": "SeargeIntegerMath",
-      "pos": [
-        680,
-        1130
-      ],
-      "size": {
-        "0": 315,
-        "1": 130
-      },
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "INT",
-          "link": 93,
-          "widget": {
-            "name": "a",
-            "config": [
-              "INT",
-              {
-                "default": 0,
-                "min": 0,
-                "max": 18446744073709552000
-              }
-            ]
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "result",
-          "type": "INT",
-          "links": [
-            100,
-            101,
-            102,
-            103
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SeargeIntegerMath"
-      },
-      "widgets_values": [
-        "a / b",
-        512,
-        2,
-        0
-      ]
+        "showOutputText": false,
+        "horizontal": false
+      }
     },
     {
       "id": 39,
       "type": "Create QR Code",
       "pos": [
-        2,
-        767
+        317,
+        784
       ],
-      "size": {
-        "0": 400,
-        "1": 220.00001525878906
-      },
+      "size": [
+        400,
+        244
+      ],
       "flags": {},
-      "order": 4,
+      "order": 8,
       "mode": 0,
+      "inputs": [
+        {
+          "name": "size",
+          "type": "INT",
+          "link": 114,
+          "widget": {
+            "name": "size",
+            "config": [
+              "INT",
+              {
+                "default": 512,
+                "min": 64,
+                "max": 4096,
+                "step": 64
+              }
+            ]
+          }
+        }
+      ],
       "outputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            90,
-            106
+            115,
+            120
           ],
           "shape": 3,
           "slot_index": 0
@@ -1063,176 +968,13 @@
       },
       "widgets_values": [
         "Snowy Mountain Cabin",
-        "False",
+        "Pad",
         512,
         2,
         "H",
         16,
-        1
-      ]
-    },
-    {
-      "id": 46,
-      "type": "Image Pad",
-      "pos": [
-        930,
-        830
-      ],
-      "size": {
-        "0": 315,
-        "1": 154
-      },
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 106
-        },
-        {
-          "name": "top",
-          "type": "INT",
-          "link": 100,
-          "widget": {
-            "name": "top",
-            "config": [
-              "INT",
-              {
-                "default": 32,
-                "min": 0,
-                "max": 4096,
-                "step": 1
-              }
-            ]
-          }
-        },
-        {
-          "name": "bottom",
-          "type": "INT",
-          "link": 101,
-          "widget": {
-            "name": "bottom",
-            "config": [
-              "INT",
-              {
-                "default": 32,
-                "min": 0,
-                "max": 4096,
-                "step": 1
-              }
-            ]
-          }
-        },
-        {
-          "name": "left",
-          "type": "INT",
-          "link": 102,
-          "widget": {
-            "name": "left",
-            "config": [
-              "INT",
-              {
-                "default": 32,
-                "min": 0,
-                "max": 4096,
-                "step": 1
-              }
-            ]
-          }
-        },
-        {
-          "name": "right",
-          "type": "INT",
-          "link": 103,
-          "widget": {
-            "name": "right",
-            "config": [
-              "INT",
-              {
-                "default": 32,
-                "min": 0,
-                "max": 4096,
-                "step": 1
-              }
-            ]
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            104,
-            105
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Image Pad"
-      },
-      "widgets_values": [
-        32,
-        32,
-        32,
-        32,
+        1,
         "Grey"
-      ]
-    },
-    {
-      "id": 48,
-      "type": "SaveImage",
-      "pos": [
-        2024,
-        709
-      ],
-      "size": {
-        "0": 594.291259765625,
-        "1": 605.5518798828125
-      },
-      "flags": {},
-      "order": 27,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 112
-        }
-      ],
-      "properties": {},
-      "widgets_values": [
-        "qrcode_%date:MM_dd_yyyy%/qr_hires_"
-      ]
-    },
-    {
-      "id": 49,
-      "type": "SaveImage",
-      "pos": [
-        2453.0990710449205,
-        58.733161468505756
-      ],
-      "size": [
-        342.8522340249792,
-        310.20108721760175
-      ],
-      "flags": {},
-      "order": 26,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 113
-        }
-      ],
-      "properties": {},
-      "widgets_values": [
-        "qrcode_%date:MM_dd_yyyy%/qr_lores_"
       ]
     }
   ],
@@ -1326,14 +1068,6 @@
       "CONTROL_NET"
     ],
     [
-      28,
-      19,
-      0,
-      20,
-      0,
-      "*"
-    ],
-    [
       29,
       20,
       0,
@@ -1406,110 +1140,6 @@
       "CONDITIONING"
     ],
     [
-      90,
-      39,
-      0,
-      42,
-      0,
-      "IMAGE"
-    ],
-    [
-      92,
-      42,
-      0,
-      44,
-      0,
-      "INT"
-    ],
-    [
-      93,
-      44,
-      0,
-      45,
-      0,
-      "INT"
-    ],
-    [
-      100,
-      45,
-      0,
-      46,
-      1,
-      "INT"
-    ],
-    [
-      101,
-      45,
-      0,
-      46,
-      2,
-      "INT"
-    ],
-    [
-      102,
-      45,
-      0,
-      46,
-      3,
-      "INT"
-    ],
-    [
-      103,
-      45,
-      0,
-      46,
-      4,
-      "INT"
-    ],
-    [
-      104,
-      46,
-      0,
-      35,
-      0,
-      "IMAGE"
-    ],
-    [
-      105,
-      46,
-      0,
-      19,
-      0,
-      "*"
-    ],
-    [
-      106,
-      39,
-      0,
-      46,
-      0,
-      "IMAGE"
-    ],
-    [
-      107,
-      47,
-      0,
-      8,
-      0,
-      "INT"
-    ],
-    [
-      108,
-      47,
-      0,
-      8,
-      1,
-      "INT"
-    ],
-    [
-      109,
-      47,
-      0,
-      44,
-      1,
-      "INT"
-    ],
-    [
       111,
       13,
       0,
@@ -1532,6 +1162,54 @@
       49,
       0,
       "IMAGE"
+    ],
+    [
+      114,
+      47,
+      0,
+      39,
+      0,
+      "INT"
+    ],
+    [
+      115,
+      39,
+      0,
+      35,
+      0,
+      "IMAGE"
+    ],
+    [
+      116,
+      50,
+      0,
+      8,
+      1,
+      "INT"
+    ],
+    [
+      117,
+      50,
+      0,
+      8,
+      0,
+      "INT"
+    ],
+    [
+      118,
+      47,
+      0,
+      50,
+      0,
+      "*"
+    ],
+    [
+      120,
+      39,
+      0,
+      20,
+      0,
+      "*"
     ]
   ],
   "groups": [],
