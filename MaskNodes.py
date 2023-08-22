@@ -725,8 +725,8 @@ class CutByMask:
         max_x = boxes[:,2]
         max_y = boxes[:,3]
 
-        width = max_x - min_x + 1
-        height = max_y - min_y + 1
+        width = max_x - min_x
+        height = max_y - min_y
 
         use_width = int(torch.max(width).item())
         use_height = int(torch.max(height).item())
