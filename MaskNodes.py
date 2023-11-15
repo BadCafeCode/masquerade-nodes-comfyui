@@ -597,11 +597,11 @@ class MaskToRegion:
         # Account for padding
         min_x = torch.max(boxes[:,0] - padding, torch.tensor(0.))
         min_y = torch.max(boxes[:,1] - padding, torch.tensor(0.))
-        max_x = torch.min(boxes[:,2] + padding, torch.tensor(mask_width))
-        max_y = torch.min(boxes[:,3] + padding, torch.tensor(mask_height))
+        max_x = torch.min(boxes[:,2] + padding, torch.tensor(mask_width - 1))
+        max_y = torch.min(boxes[:,3] + padding, torch.tensor(mask_height - 1))
 
-        width = max_x - min_x
-        height = max_y - min_y
+        width = max_x - min_x + 1
+        height = max_y - min_y + 1
 
         # Make sure the width and height are big enough
         target_width = torch.max(width, torch.tensor(min_width))
@@ -652,13 +652,13 @@ class MaskToRegion:
         max_y[bad] -= min_y[bad]
         min_y[bad] = 0
 
-        bad = torch.gt(max_x, mask_width)
-        min_x[bad] -= (max_x[bad] - mask_width)
-        max_x[bad] = mask_width
+        bad = torch.gt(max_x, mask_width - 1)
+        min_x[bad] -= max_x[bad] - (mask_width - 1)
+        max_x[bad] = mask_width - 1
 
-        bad = torch.gt(max_y, mask_height)
-        min_y[bad] -= (max_y[bad] - mask_height)
-        max_y[bad] = mask_height
+        bad = torch.gt(max_y, mask_height - 1)
+        min_y[bad] -= max_y[bad] - (mask_height - 1)
+        max_y[bad] = mask_height - 1
 
         region = torch.zeros((mask_size[0], mask_height, mask_width))
         for i in range(0, mask_size[0]):
