@@ -4,6 +4,7 @@ import numpy as np
 import math
 from torchvision import transforms
 from torchvision.ops import masks_to_boxes
+from clipseg.clipseg import CLIPDensePredT
 import torchvision.transforms.functional as TF
 import torch.nn.functional as torchfn
 import subprocess
