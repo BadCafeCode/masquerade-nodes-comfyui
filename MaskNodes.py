@@ -111,6 +111,9 @@ def tensors2common(t1: torch.Tensor, t2: torch.Tensor) -> (torch.Tensor, torch.T
         return t1, t2
 
 class ClipSegNode:
+    """
+        Automatically calculates a mask based on the text prompt
+    """
     def __init__(self):
         pass
 
@@ -127,6 +130,7 @@ class ClipSegNode:
         }
 
     RETURN_TYPES = ("IMAGE","IMAGE",)
+    RETURN_NAMES = ("thresholded_mask", "raw_mask",)
     FUNCTION = "get_mask"
 
     CATEGORY = "Masquerade Nodes"
@@ -506,6 +510,9 @@ class MixColorByMask:
         return (image * (1. - mask) + image2 * mask,)
 
 class CreateRectMask:
+    """
+    Creates a rectangle mask. If copy_image_size is provided, the image_width and image_height parameters are ignored and the size of the given images will be used instead.
+    """
     def __init__(self):
         pass
 
@@ -558,6 +565,9 @@ class CreateRectMask:
         return (mask.unsqueeze(0),)
 
 class MaskToRegion:
+    """
+    Given a mask, returns a rectangular region that fits the mask with the given constraints
+    """
     def __init__(self):
         pass
 
@@ -670,6 +680,9 @@ class MaskToRegion:
         return (region,)
 
 class CutByMask:
+    """
+    Cuts the image to the bounding box of the mask. If force_resize_width or force_resize_height are provided, the image will be resized to those dimensions. The `mask_mapping_optional` input can be provided from a 'Separate Mask Components' node to cut multiple pieces out of a single image in a batch.
+    """
     def __init__(self):
         pass
 
@@ -762,6 +775,9 @@ class CutByMask:
             return (result,)
 
 class SeparateMaskComponents:
+    """
+    Separates a mask into multiple contiguous components. Returns the individual masks created as well as a MASK_MAPPING which can be used in other nodes when dealing with batches.
+    """
     def __init__(self):
         pass
 
@@ -774,6 +790,7 @@ class SeparateMaskComponents:
         }
 
     RETURN_TYPES = ("IMAGE","MASK_MAPPING")
+    RETURN_NAMES = ("mask", "mask_mappings")
     FUNCTION = "separate"
 
     CATEGORY = "Masquerade Nodes"
@@ -812,6 +829,9 @@ class SeparateMaskComponents:
 
 
 class PasteByMask:
+    """
+    Pastes `image_to_paste` onto `image_base` using `mask` to determine the location. The `resize_behavior` parameter determines how the image to paste is resized to fit the mask. If `mask_mapping_optional` obtained from a 'Separate Mask Components' node is used, it will control which image gets pasted onto which base image.
+    """
     def __init__(self):
         pass
 
@@ -964,6 +984,7 @@ class GetImageSize:
         }
 
     RETURN_TYPES = ("INT","INT",)
+    RETURN_NAMES = ("width", "height")
     FUNCTION = "get_size"
 
     CATEGORY = "Masquerade Nodes"
@@ -1003,6 +1024,9 @@ class ChangeChannelCount:
             return (tensor2rgb(image),)
 
 class ConstantMask:
+    """
+    Creates a mask filled with a constant value. If copy_image_size is provided, the explicit_height and explicit_width parameters are ignored and the size of the given images will be used instead.
+    """
     def __init__(self):
         pass
 
@@ -1041,6 +1065,9 @@ class ConstantMask:
         return (result,)
 
 class PruneByMask:
+    """
+    Filters out the images in a batch that don't have an associated mask with an average pixel value of at least 0.5.
+    """
     def __init__(self):
         pass
 
@@ -1065,6 +1092,9 @@ class PruneByMask:
         return (image[mean >= 0.5],)
 
 class MakeImageBatch:
+    """
+    Creates a batch of images from multiple individual images or batches.
+    """
     def __init__(self):
         pass
 
