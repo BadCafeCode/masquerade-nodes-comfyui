@@ -277,11 +277,13 @@ This node is the same as Unary Mask Op, but will operate across all channels of 
 ## Create QR Code
 #### Inputs
 * `text` - The content to embed in the QR Code
+* `resize` - how to resize 'Scale' will scale the qr code, 'Pad' will pad if the qr code is smaller then the size, 'None' will do nothing.
 * `size` - The size of the QR Code (across height and width) in pixels.
 * `qr_version` - The version of QR Code to use. Higher versions can encode more data, but are larger.
 * `error_correction` - The level of error correction to use.
 * `box_size` - The size of each box in the QR Code in pixels.
 * `border` - The size of the border around the QR Code in pixels.
+* `pad_color` - The color to pad with, 'White', 'Grey', 'Black'
 
 ## Convert Color Space
 #### Inputs

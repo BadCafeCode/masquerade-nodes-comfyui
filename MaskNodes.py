@@ -1141,11 +1141,13 @@ class CreateQRCodeNode:
         return {
             "required": {
                 "text": ("STRING", {"multiline": True}),
+                "resize": (["Scale", "Pad", "None"], {"default": "Scale"}),
                 "size": ("INT", {"default": 512, "min": 64, "max": 4096, "step": 64}),
                 "qr_version": ("INT", {"default": 1, "min": 1, "max": 40, "step": 1}),
                 "error_correction": (["L", "M", "Q", "H"], {"default": "H"}),
                 "box_size": ("INT", {"default": 10, "min": 1, "max": 100, "step": 1}),
                 "border": ("INT", {"default": 4, "min": 0, "max": 100, "step": 1}),
+                "pad_color": (["White", "Grey", "Black"], {"default": "White"}),
             },
         }
 
@@ -1154,7 +1156,7 @@ class CreateQRCodeNode:
 
     CATEGORY = "Masquerade Nodes"
 
-    def create_qr_code(self, text, size, qr_version, error_correction, box_size, border):
+    def create_qr_code(self, text, resize, size, qr_version, error_correction, box_size, border, pad_color):
         ensure_package("qrcode")
         import qrcode
         if error_correction =="L":
@@ -1174,9 +1176,18 @@ class CreateQRCodeNode:
         qr.add_data(text)
         qr.make(fit=True)
         img = qr.make_image(fill_color="black", back_color="white")
-        img = img.resize((size,size))
+        if resize == "Scale":
+            img = img.resize((size, size))
         # Convert img (a PIL Image) into a torch tensor
-        tensor = torch.from_numpy(np.array(img))
+        tensor = torch.from_numpy(np.array(img)).float()
+
+        if resize == "Pad":
+            # if the size is larger then pad
+            if tensor.shape[1] < size:
+                padding = (size - tensor.shape[1]) // 2
+                color = {"White": 1.0, "Grey": 0.5, "Black": 0.0}.get(pad_color, 0)
+                tensor = torchfn.pad(tensor, [padding, padding, padding, padding], value=color)
+
         return (tensor2rgb(tensor.unsqueeze(0)),)
 
 def rgb2hsv(rgb):
