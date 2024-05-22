@@ -750,12 +750,12 @@ class CutByMask:
         if force_resize_height > 0:
             use_height = force_resize_height
 
-        alpha_mask = torch.ones((B, H, W, 4))
+        alpha_mask = torch.ones((B, H, W, 4)).to(device=image.device)
         alpha_mask[:,:,:,3] = mask
 
         image = image * alpha_mask
 
-        result = torch.zeros((B, use_height, use_width, 4))
+        result = torch.zeros((B, use_height, use_width, 4)).to(device=image.device)
         for i in range(0, B):
             if not is_empty[i]:
                 ymin = int(min_y[i].item())
