@@ -64,7 +64,7 @@ def tensor2rgba(t: torch.Tensor) -> torch.Tensor:
     elif size[3] == 1:
         return t.repeat(1, 1, 1, 4)
     elif size[3] == 3:
-        alpha_tensor = torch.ones((size[0], size[1], size[2], 1))
+        alpha_tensor = torch.ones((size[0], size[1], size[2], 1)).to(device=t.device)
         return torch.cat((t, alpha_tensor), dim=3)
     else:
         return t
@@ -750,12 +750,12 @@ class CutByMask:
         if force_resize_height > 0:
             use_height = force_resize_height
 
-        alpha_mask = torch.ones((B, H, W, 4))
+        alpha_mask = torch.ones((B, H, W, 4)).to(device=image.device)
         alpha_mask[:,:,:,3] = mask
 
         image = image * alpha_mask
 
-        result = torch.zeros((B, use_height, use_width, 4))
+        result = torch.zeros((B, use_height, use_width, 4)).to(device=image.device)
         for i in range(0, B):
             if not is_empty[i]:
                 ymin = int(min_y[i].item())
