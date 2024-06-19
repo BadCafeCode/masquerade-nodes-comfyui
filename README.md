@@ -1,3 +1,8 @@
+# Recommended Alternatives
+This node pack was created as a dependency-free library before the [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) made installing dependencies easy for end-users.
+
+Unless you specifically need a library without dependencies, I recommend using [Impact Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) instead. It's a more feature-rich and well-maintained alternative for dealing with masks and segmentation.
+
 # Masquerade Nodes
 
 This is a node pack for ComfyUI, primarily dealing with masks. Some example workflows this pack enables are:
