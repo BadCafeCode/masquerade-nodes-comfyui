@@ -1,0 +1,14 @@
+[project]
+name = "masquerade-nodes-comfyui"
+description = "This is a node pack for ComfyUI, primarily dealing with masks."
+version = "1.0.0"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/BadCafeCode/masquerade-nodes-comfyui"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "masquerade-nodes-comfyui"
+Icon = ""
